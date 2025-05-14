@@ -1,6 +1,6 @@
 import { FaStar } from "react-icons/fa";
 
-export default function TaskTable({ tasks }) {
+export default function TaskTable({ tasks, onEditTask }) {
   return (
     <div className="overflow-auto">
       <table className="table-fixed overflow-auto xl:w-full">
@@ -56,7 +56,12 @@ export default function TaskTable({ tasks }) {
               <td>
                 <div className="flex items-center justify-center space-x-3">
                   <button className="text-red-500">Delete</button>
-                  <button className="text-blue-500">Edit</button>
+                  <button
+                    className="text-blue-500 cursor-pointer"
+                    onClick={() => onEditTask(task)}
+                  >
+                    Edit
+                  </button>
                 </div>
               </td>
             </tr>
