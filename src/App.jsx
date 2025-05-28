@@ -1,17 +1,40 @@
-import Footer from "./Footer";
-import Hero from "./Hero";
-import Navbar from "./Navbar";
-import TaskBoard from "./task/TaskBoard";
+import { useEffect, useState } from "react";
+import getData from "./utils/getData";
 
-export default function App() {
+function App() {
+  const [count, setCount] = useState(0);
+  const [result, setResult] = useState(null);
+
+  useEffect(() => {
+    let isRelevant = true;
+
+    async function fetchData() {
+      try {
+        const data = await getData(count);
+        if (isRelevant) {
+          setResult(data);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    fetchData();
+
+    return () => {
+      isRelevant = false;
+    };
+  }, [count]);
+
   return (
     <>
-      <Navbar />
-      <div className="flex flex-col items-center">
-        <Hero />
-        <TaskBoard />
-      </div>
-      <Footer />
+      <h1>Count: {count}</h1>
+
+      {result && <p>{result}</p>}
+
+      <button onClick={() => setCount(count + 1)}>Increment</button>
     </>
   );
 }
+
+export default App;
