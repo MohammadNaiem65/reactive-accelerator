@@ -11,8 +11,10 @@
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.10",
+    "lorem-ipsum": "^2.0.8",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
+    "react-virtualized": "^9.22.6",
     "tailwindcss": "^4.1.10"
   },
   "devDependencies": {

@@ -1,35 +1,50 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { loremIpsum } from "lorem-ipsum";
+import { List } from "react-virtualized";
+import ListItem from "./components/ListItem";
 
-function App() {
-  const [count, setCount] = useState(0)
+export default function App() {
+  const rowCount = 50000;
+  const containerWidth = 1900;
+  const containerHeight = 850;
+  const rowHeight = 90;
+
+  const list = Array(rowCount)
+    .fill()
+    .map((val, index) => {
+      return {
+        id: index,
+        name: "Sumit Saha",
+        image: "https://placehold.co/40",
+        text: loremIpsum({
+          count: 1,
+          units: "sentences",
+          sentenceLowerBound: 4,
+          sentenceUpperBound: 8,
+        }),
+      };
+    });
+
+  function rowRenderer({ key, index, style }) {
+    return (
+      <ListItem
+        key={key}
+        name={list[index].name}
+        text={list[index].text}
+        image={list[index].image}
+        style={style}
+      />
+    );
+  }
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <section>
+      <List
+        height={containerHeight}
+        width={containerWidth}
+        rowCount={rowCount}
+        rowHeight={rowHeight}
+        rowRenderer={rowRenderer}
+      />
+    </section>
+  );
 }
-
-export default App
